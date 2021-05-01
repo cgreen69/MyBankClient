@@ -1,0 +1,34 @@
+<div class="container">
+
+    <div class="row">
+
+        <div class="col">
+
+            <input id="name" name="name" required pattern="^[0-9]+(\.[0-9]{1,2})?$" [(ngModel)]="amount" #name="ngModel" type="number" />
+
+        </div>
+ 
+        <div class="col">
+
+            <select name="selectedCurrency"  [(ngModel)]="selectedCurrency">
+                <option *ngFor="let ccy of currencies" [value]="ccy" >{{ccy}}</option>
+            </select>
+
+        </div>
+
+        <div class="col">
+
+            <button [disabled]="name.invalid && (name.dirty || name.touched)" (click)="process(amount,selectedCurrency)" mat-stroked-button color="primary">Submit</button>
+
+        </div>
+
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="col">
+            there is an error
+
+        </div>
+
+    </div>
+
+
+    
+</div> 

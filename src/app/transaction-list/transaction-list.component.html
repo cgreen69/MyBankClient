@@ -1,0 +1,27 @@
+<p>transactions works!</p>
+
+<div class="container" style="border-width: 1px solid;">
+    <div class="row">
+        <div class="col-2">Date</div>
+        <div class="col-2">Description</div>
+        <div class="col-2">Amount</div>
+        <div class="col-*">Balance</div>
+    </div>
+    <div class="row" *ngFor="let transaction of transactions$ | async ">
+        <div class="col-2">{{transaction.date}}</div>
+        <div class="col-2">{{transaction.description}}</div>
+        <div class="col-2">{{transaction.amount}}</div>
+        <div class="col-*">{{transaction.balance}}</div> 
+     </div>
+<br><br>
+     <div class="row">
+        <app-transaction [transactionType]="TransactionType.deposit" (transactionCompleted)="loadTransactions()" ></app-transaction>
+     </div>
+     <div class="row"> 
+        <app-transaction [transactionType]="TransactionType.withdrawal" (transactionCompleted)="loadTransactions()" ></app-transaction> 
+     </div>
+</div>    
+
+
+
+  
