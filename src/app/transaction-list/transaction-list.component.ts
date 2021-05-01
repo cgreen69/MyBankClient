@@ -16,17 +16,21 @@ export class TransactionListComponent implements OnInit {
 
   public transactions$ :Observable<Transaction[]>; 
   public TransactionType = TransactionType;
+  public ActiveTransaction : TransactionType = null;
 
   constructor(private bankingService: BankingService) { }
 
   ngOnInit(): void {
 
-    this.bankingService.getTransactions().pipe(shareReplay(1)).subscribe(a=>console.table(a));
-
    this.loadTransactions();
 
   }
 
+  public setActiveTransaction(trans:TransactionType) {
+
+    this.ActiveTransaction = trans;
+    
+  }
 
   public loadTransactions() {
 

@@ -11,6 +11,7 @@ import {TransactionType} from '../types/transaction-type';
 export class TransactionComponent implements OnInit {
 
   @Output() transactionCompleted = new EventEmitter<Boolean>();
+  @Output() transactionCancelled = new EventEmitter<Boolean>();
   @Input() transactionType : TransactionType
   
   currencies = [
@@ -21,6 +22,7 @@ export class TransactionComponent implements OnInit {
 
   
   public selectedCurrency:string = "GBP"
+  
   public amount:number
 
   constructor(private bankingService: BankingService) { }
@@ -28,26 +30,23 @@ export class TransactionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public process = (amount:number, ccy:string) => {
+  public processTransaction = (amount:number, ccy:string) => {
 
-    this.bankingService.process(amount,ccy,this.transactionType).subscribe(data=> {
+    this.bankingService.process(amount,ccy,this.transactionType).subscribe(_=> {
       
-      if (!data) {
-
-        console.error("deposit failed");
-
-      } else {
-
-        this.transactionCompleted.emit(true);
-        
-      }
-
+      this.transactionCompleted.emit(true);
+      
     }
     
 
     );
     
 
+  }
+
+  public cancelTransaction = () => {
+
+    this.transactionCancelled.emit(true);
   }
 
 }

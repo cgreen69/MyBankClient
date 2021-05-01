@@ -18,11 +18,17 @@
 
         <div class="col">
 
-            <button [disabled]="name.invalid && (name.dirty || name.touched)" (click)="process(amount,selectedCurrency)" mat-stroked-button color="primary">Submit</button>
+            <button [disabled]="name.invalid && (name.dirty || name.touched)" (click)="processTransaction(amount,selectedCurrency)" mat-stroked-button color="primary">Submit</button>
 
         </div>
 
-        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="col">
+        <div class="col">
+
+            <button  mat-stroked-button color="primary" (click)="cancelTransaction()" >Cancel</button>
+
+        </div>
+
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="col alert alert-danger">
             there is an error
 
         </div>
