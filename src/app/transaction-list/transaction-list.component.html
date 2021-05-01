@@ -23,11 +23,11 @@
    <button *ngIf="ActiveTransaction == null" (click)="setActiveTransaction(TransactionType.withdrawal)" >Withdrawal</button>
 
    <div *ngIf="ActiveTransaction === TransactionType.deposit" class="row">
-      <app-transaction [transactionType]="TransactionType.deposit" (transactionCompleted)="loadTransactions()" (transactionCancelled)="ActiveTransaction = null" >
+      <app-transaction [transactionType]="TransactionType.deposit" (transactionCompleted)="setActiveTransaction(null);loadTransactions()" (transactionCancelled)="setActiveTransaction(null)" >
       </app-transaction>
    </div>
    <div *ngIf="ActiveTransaction === TransactionType.withdrawal" class="row">
-      <app-transaction [transactionType]="TransactionType.withdrawal" (transactionCompleted)="loadTransactions()" (transactionCancelled)="ActiveTransaction = null" >
+      <app-transaction [transactionType]="TransactionType.withdrawal" (transactionCompleted)="setActiveTransaction(null);loadTransactions()" (transactionCancelled)="setActiveTransaction(null)" >
       </app-transaction>
    </div>
 </div>
