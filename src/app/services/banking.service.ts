@@ -10,27 +10,25 @@ import { TransactionType } from '../types/transaction-type';
   providedIn: 'root',
 })
 export class BankingService {
-  public process = (amount: number, ccy: string, type: TransactionType) => {
-
-
-    let url = `${environment.apiUrl}/process`;
-
-    let body = { "amount": amount, "ccy": ccy, "transactiontype" : type };
-
-    return this.httpClient.post(url, body).pipe(
-      catchError(this.handleError)
-    )
-
-
-  }
 
 
   constructor(
     private readonly httpClient: HttpClient,
   ) { }
 
+  public process = (amount: number, ccy: string, type: TransactionType) => {
 
-  getTransactions(): Observable<Transaction[]> {
+    let url = `${environment.apiUrl}/process`;
+
+    let body = { "amount": amount, "ccy": ccy, "transactiontype": type };
+
+    return this.httpClient.post(url, body).pipe(
+      catchError(this.handleError)
+    )
+
+  }
+
+  public getTransactions = () => {
     let url = `${environment.apiUrl}/transactions`;
     return this.httpClient.get<Transaction[]>(url).pipe(
       catchError(this.handleError)
@@ -38,29 +36,13 @@ export class BankingService {
     );
   }
 
-  handleError(error) {
+  public handleError = (error) => {
 
-    let errorMessage = '';
+    console.error(error);
 
-    if (error.error instanceof ErrorEvent) {
-
-      // client-side error
-
-      errorMessage = `Error: ${error.error.message}`;
-
-    } else {
-
-      // server-side error
-
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-
-    }
-
-    //  window.alert(errorMessage);
-
-    return throwError(errorMessage);
+    return throwError(error);
 
   }
-  
+
 }
 

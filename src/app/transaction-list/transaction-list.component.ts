@@ -21,6 +21,8 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.bankingService.getTransactions().pipe(shareReplay(1)).subscribe(a=>console.table(a));
+
    this.loadTransactions();
 
   }
