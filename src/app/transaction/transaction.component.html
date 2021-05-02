@@ -18,7 +18,7 @@
 
         <div class="col">
 
-            <button [disabled]="amount > 50000 || name.invalid && (name.dirty || name.touched)" (click)="processTransaction(amount,selectedCurrency)" mat-stroked-button color="primary">Submit</button>
+            <button [disabled]="amount === 0 || amount > 50000 || name.invalid && (name.dirty || name.touched)" (click)="processTransaction(amount,selectedCurrency)" mat-stroked-button color="primary">Submit</button>
 
         </div>
 
@@ -29,7 +29,7 @@
         </div>
 
         <div *ngIf="amount > 50000  || (name.invalid && (name.dirty || name.touched))" class="col alert alert-danger">
-            Amount cannot be blank, below zero, above 50000 or have more than two decimal places
+            Amount cannot be blank, zero or below, above 50000 or have more than two decimal places
         </div>
 
     </div>

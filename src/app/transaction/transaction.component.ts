@@ -23,11 +23,12 @@ export class TransactionComponent implements OnInit {
   
   public selectedCurrency:string = "GBP"
   
-  public amount:number
+  public amount:number = 0
 
   constructor(private bankingService: BankingService) { }
 
   ngOnInit(): void {
+    
   }
 
   public processTransaction = (amount:number, ccy:string) => {
