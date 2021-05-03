@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Transaction } from '../types/transaction';
 import { TransactionType } from '../types/transaction-type';
 
@@ -30,7 +30,7 @@ export class BankingService {
 
   public getTransactions = () => {
     let url = `${environment.apiUrl}/transactions`;
-    return this.httpClient.get<Transaction[]>(url).pipe(
+    return this.httpClient.get<Transaction[]>(url).pipe(tap(d=>console.log(d.length)),
       catchError(this.handleError)
 
     );
@@ -40,7 +40,7 @@ export class BankingService {
 
     console.error(e);
 
-    window.alert(e.message);
+    window.alert(e.error);
 
     return throwError(e);
 

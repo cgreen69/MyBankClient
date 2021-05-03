@@ -5,20 +5,34 @@
          <div class="col-auto title-text">Welcome to my bank</div>
       </div>
    </div>
+
+
    <div class="container transaction-inner" style="overflow-y: scroll;">
-      <div class="row header">
-         <div class="col-2">Date</div>
-         <div class="col-4">Description</div>
-         <div class="col-2">Amount</div>
-         <div class="col-*">Balance</div>
-      </div>
-      <div class="row" *ngFor="let transaction of transactions$ | async ">
-         <div class="col-2">{{transaction.date | date:'d MMMM yyyy H:mm' : 'UTC'}} </div>
-         <div class="col-4">{{transaction.description}}</div>
-         <div class="col-2">{{transaction.amount | number : '1.2-2'}}</div>
-         <div class="col-*">{{transaction.balance | number : '1.2-2'}}</div>
-      </div>
+
+      <span *ngIf="(transactions$ | async)?.length > 0 && (transactions$ | async) as transactions; else notransactions">
+         <div class="row header">
+            <div class="col-2">Date</div>
+            <div class="col-4">Description</div>
+            <div class="col-2">Amount</div>
+            <div class="col-*">Balance</div>
+         </div>
+      
+         <div class="row" *ngFor="let transaction of transactions">
+            <div class="col-2">{{transaction.date | date:'d MMMM yyyy H:mm' : 'UTC'}} </div>
+            <div class="col-4">{{transaction.description}}</div>
+            <div class="col-2">{{transaction.amount | number : '1.2-2'}}</div>
+            <div class="col-*">{{transaction.balance | number : '1.2-2'}}</div>
+         </div>
+      </span>
+      <ng-template #notransactions>
+         <div *ngIf="!loading" class="row">
+            <div class="col text-center">
+             No transactions to list - please deposit some funds
+             </div>
+         </div>   
+      </ng-template>
    </div>
+
 </div>
 <br>
 <div class="container">
@@ -29,7 +43,7 @@
             (click)="setActiveTransaction(TransactionType.deposit)">Deposit</button>
       </div>
       <div class="col-sm-1">
-         <button class="btn" *ngIf="ActiveTransaction == null"
+         <button class="btn" *ngIf="ActiveTransaction == null && hasTransactions"
             (click)="setActiveTransaction(TransactionType.withdrawal)">Withdraw</button>
       </div>
    </div>

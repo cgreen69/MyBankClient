@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { shareReplay, tap } from 'rxjs/operators';
 import { BankingService } from '../services/banking.service';
 import { Transaction } from '../types/transaction';
 import { TransactionType } from '../types/transaction-type';
@@ -17,6 +17,8 @@ export class TransactionListComponent implements OnInit {
   public transactions$ :Observable<Transaction[]>; 
   public TransactionType = TransactionType;
   public ActiveTransaction : TransactionType = null;
+  public hasTransactions : Boolean = false;
+  public loading : Boolean = false;
 
   constructor(private bankingService: BankingService) { }
 
@@ -34,7 +36,14 @@ export class TransactionListComponent implements OnInit {
 
   public loadTransactions() {
 
-    this.transactions$ = this.bankingService.getTransactions().pipe(shareReplay(1));
+    this.loading = true;
+
+    this.transactions$ = this.bankingService.getTransactions().pipe(tap(d=> {
+      this.loading = false;
+      this.hasTransactions = d.length > 0;
+    }
+      ),
+      shareReplay(1));
 
   }
 
