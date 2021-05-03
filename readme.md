@@ -8,7 +8,7 @@ The app has been tested in Chrome and Edge.
 
 ## Installation
 
-Download or clone the repo from the repo. Run the following command
+Download or clone the repo. Open a command prompt in the MyBankClient folder. Run the following command
 
 ```install
 npm install 

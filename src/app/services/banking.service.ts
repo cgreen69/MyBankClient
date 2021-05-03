@@ -30,7 +30,7 @@ export class BankingService {
 
   public getTransactions = () => {
     let url = `${environment.apiUrl}/transactions`;
-    return this.httpClient.get<Transaction[]>(url).pipe(tap(d=>console.log(d.length)),
+    return this.httpClient.get<Transaction[]>(url).pipe(
       catchError(this.handleError)
 
     );

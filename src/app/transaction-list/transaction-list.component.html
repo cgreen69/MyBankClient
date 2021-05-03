@@ -37,6 +37,7 @@
 <br>
 <div class="container">
 
+   <!-- Transaction buttons -->
    <div class="row">
       <div class="col-sm-1">
          <button class="btn" *ngIf="ActiveTransaction == null"
@@ -48,6 +49,7 @@
       </div>
    </div>
 
+   <!-- Transaction controls -->
    <div *ngIf="ActiveTransaction === TransactionType.deposit" class="row">
       <div class="col-sm-12">
          <app-transaction [transactionType]="TransactionType.deposit"
