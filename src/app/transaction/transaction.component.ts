@@ -17,6 +17,8 @@ export class TransactionComponent implements OnInit {
   currencies = [
     "GBP",
     "EUR",
+    "HKD",
+    "JPY",
     "USD"
   ];
 

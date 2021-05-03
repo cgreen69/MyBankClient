@@ -1,35 +1,42 @@
-﻿# Foobar
+﻿# MyBank client app 
 
-Foobar is a Python library for dealing with word pluralization.
+The client app provides a simple interface to the MyBank web api. Together they form a simple banking app with FX conversions. Basic validation is provided, for example, to limit the size of transactions. 
 
-how to run db scripts
-note we use inline sql for speed of development, needs to be replaced with SPs 
-how to run karma unit test 
-how to run client and api
+
+The app has been tested in Chrome and Edge.
 
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Download or clone the repo from the repo. Run the following command
 
-```bash
-pip install foobar
+```install
+npm install 
 ```
+
+followed by 
+
+```ng
+ng s 
+```
+
+The client app is configured to run on port 4300, this can be changed by altering the port setting in the serve section in angular.json
 
 ## Usage
 
-```python
-import foobar
+To perform a transaction make sure the web api is running and click on depost or withdraw. Enter a value, choose a currency and click on submit. When the app is first installed and ran no funds a re available so the withdraw button is hidden.
 
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
+
+## Tests
+
+A basic jasmine unit test is provided in transaction.component.spec.ts. Right now it just checks that the relevant banking service has been injected. Time constraints prevented more extensive tests being written, ideally we'd test that errors are raised when invalid input is supplied.
+
+```jasmine
+ng t 
 ```
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
+Pull requests are welcome. Please contact me to suggest changes.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

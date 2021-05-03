@@ -4,7 +4,7 @@
 
         <div class="col-sm-3">
 
-            Amount:<input style="height:24px" id="name" name="name" required pattern="^[0-9]+(\.[0-9]{1,2})?$" [(ngModel)]="amount" #name="ngModel" type="number" max="50000" />
+            Amount:<input style="height:25px;width:120px" id="name" name="name" required pattern="^[0-9]+(\.[0-9]{1,2})?$" [(ngModel)]="amount" #name="ngModel" type="number" max="50000" />
 
             <select style="height:24px" name="selectedCurrency"  [(ngModel)]="selectedCurrency">
                 <option *ngFor="let ccy of currencies" [value]="ccy" >{{ccy}}</option>
