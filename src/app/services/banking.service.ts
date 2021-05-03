@@ -36,11 +36,13 @@ export class BankingService {
     );
   }
 
-  public handleError = (error) => {
+  public handleError = (e) => {
 
-    console.error(error);
+    console.error(e);
 
-    return throwError(error);
+    window.alert(e.message);
+
+    return throwError(e);
 
   }
 
