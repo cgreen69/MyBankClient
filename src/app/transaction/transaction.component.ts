@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BankingService } from '../services/banking.service';
 import { Output, EventEmitter } from '@angular/core';
 import {TransactionType} from '../types/transaction-type';
+import { FormGroup, FormControl, Validators, FormBuilder } 
+    from '@angular/forms';
 
 @Component({
   selector: 'app-transaction',
@@ -24,18 +26,26 @@ export class TransactionComponent implements OnInit {
 
   
   public selectedCurrency:string = "GBP"
+
+  public transactionform: FormGroup 
   
-  public amount:number = 0
+  constructor(private bankingService: BankingService, private fb: FormBuilder) { 
 
-  constructor(private bankingService: BankingService) { }
-
-  ngOnInit(): void {
+    this.transactionform = this.fb.group({
+      amount: ["",[Validators.required,Validators.max(50000),Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]],
+      selectedCurrency: ["GBP"],
+    });
     
   }
 
-  public processTransaction = (amount:number, ccy:string) => {
+  ngOnInit(): void {
+  
 
-    this.bankingService.process(amount,ccy,this.transactionType).subscribe(_=> {
+  } 
+
+  public processTransaction = () => {
+
+    this.bankingService.process(this.transactionform.get('amount').value,this.transactionform.get('selectedCurrency').value,this.transactionType).subscribe(_=> {
       
       this.transactionCompleted.emit(true);
       

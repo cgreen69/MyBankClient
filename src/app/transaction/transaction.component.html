@@ -1,43 +1,51 @@
 <div class="container">
 
-    <div class="row align-items-center">
 
-        <div class="col-sm-3">
+    <form [formGroup]="transactionform" (ngSubmit)="processTransaction()">
 
-            Amount:<input style="height:25px;width:120px" id="name" name="name" required pattern="^[0-9]+(\.[0-9]{1,2})?$" [(ngModel)]="amount" #name="ngModel" type="number" max="50000" />
+        <div class="row align-items-center">
 
-            <select style="height:24px" name="selectedCurrency"  [(ngModel)]="selectedCurrency">
-                <option *ngFor="let ccy of currencies" [value]="ccy" >{{ccy}}</option>
-            </select>
+            <div class="col-sm-3">
 
-        </div>
+                Amount:<input style="height:25px;width:120px" formControlName="amount" type="number" />
+
+                <select style="height:24px" name="selectedCurrency" formControlName="selectedCurrency">
+                    <option *ngFor="let ccy of currencies" [value]="ccy">{{ccy}}</option>
+                </select>
+
+            </div>
  
-        <div class="col-sm-1">
+            <div class="col-sm-1">
 
-            <button class="btn-submit"  [disabled]="amount === 0 || amount > 50000 || name.invalid && (name.dirty || name.touched)" (click)="processTransaction(amount,selectedCurrency)" mat-stroked-button color="primary">Submit</button>
+                <button type="submit" class="btn-submit"
+                    [disabled]="!transactionform.valid" mat-stroked-button
+                    color="primary">Submit</button>
 
+            </div>
+
+            <div class="col-sm-1">
+
+                <button class="btn-cancel" type="button" color="elegant" (click)="cancelTransaction()">Cancel</button>
+  
+            </div>
         </div>
 
-        <div class="col-sm-1">
+    </form>
 
-            <button class="btn-cancel"  type="button" color="elegant" (click)="cancelTransaction()" >Cancel</button>
+</div>
+<br>  
+ 
 
-        </div>
-
-        
-
-    </div>
- </div>
- <br>
- <div class="container">
+<div class="container">
 
     <div class="row">
 
-        <div class="col-sm-12" *ngIf="amount > 50000  || (name.invalid && (name.dirty || name.touched))" class="col alert alert-danger text-center">
+        <div class="col-sm-12" *ngIf="!transactionform.controls.amount.valid && (transactionform.controls.amount.dirty || transactionform.controls.amount.touched)"
+            class="col alert alert-danger text-center"> 
             Amount cannot be blank, zero or below, above 50000 or have more than two decimal places
         </div>
 
     </div>
 
-    
-</div> 
+
+</div>

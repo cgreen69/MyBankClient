@@ -2,8 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TransactionComponent } from './transaction.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BankingService } from '../services/banking.service';
+import { FormGroup, FormControl, Validators, FormBuilder } 
+    from '@angular/forms';
 
 describe('TransactionComponent', () => {
   let component: TransactionComponent;
@@ -14,7 +16,7 @@ describe('TransactionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TransactionComponent ],
       imports: [
-        HttpClientTestingModule, BrowserAnimationsModule,FormsModule
+        HttpClientTestingModule, BrowserAnimationsModule,ReactiveFormsModule
       ],
 
     })
@@ -40,6 +42,41 @@ describe('TransactionComponent', () => {
 
     expect(service).toBeInstanceOf(BankingService)
 
+  })
+
+  it('Valid amount accepted',() => {
+
+    let fixture = TestBed.createComponent(TransactionComponent);
+
+    component = fixture.componentInstance;
+    
+    let amount = component.transactionform.controls['amount'];
+    
+    amount.setValue("100");
+
+    expect(amount.hasError('required')).toBeFalse();
+
+    expect(amount.hasError('pattern')).toBeFalse();
+
+    expect(component.transactionform.valid).toBeTrue();
+
+  })
+
+  
+
+  it('Invalid amount rejected',() => {
+
+    let fixture = TestBed.createComponent(TransactionComponent);
+
+    component = fixture.componentInstance;
+    
+    let amount = component.transactionform.controls['amount'];
+    
+    amount.setValue("100.33333");
+
+    expect(amount.hasError('pattern')).toBeTrue();
+
+    expect(component.transactionform.valid).toBeFalse();
   })
 
 });
